@@ -4,6 +4,7 @@ import cognitoClient from "@/lib/cognito";
 import { z } from "zod";
 import { ResponseBody } from "@/lib/response";
 import * as crypto from 'crypto';
+import CryptoJS from "crypto-js";
 const signUpSchema = z.object({
    fullName: z.string().min(1, { message: "Full name is required" }),
    email: z
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
       var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
 
       console.log("SECRET_HASH", process.env.NEXT_SECRET_COGNITO_ID)
-      const secretHash = crypto.createHmac('SHA256', clientSecret).update(email + clientId).digest('base64');
+      const secretHash = CryptoJS.HmacSHA256(email + clientId, clientSecret).toString(CryptoJS.enc.Base64);
 
       const command = new SignUpCommand({
          ClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,

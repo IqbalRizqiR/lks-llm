@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ForgotPasswordCommand } from "@aws-sdk/client-cognito-identity-provider";
 import cognitoClient from "@/lib/cognito";
-import * as crypto from 'crypto';
+import CryptoJS from "crypto-js";
 
 export async function POST(request: NextRequest) {
    const { username } = await request.json();
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
       var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-   const secretHash = crypto.createHmac('SHA256', clientSecret).update(username + clientId).digest('base64');
+      const secretHash = CryptoJS.HmacSHA256(username + clientId, clientSecret).toString(CryptoJS.enc.Base64);
 
    const command = new ForgotPasswordCommand({
       ClientId: process.env.COGNITO_CLIENT_ID,

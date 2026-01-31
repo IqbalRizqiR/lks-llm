@@ -48,6 +48,8 @@ const Signup = () => {
    var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
    const secretHash = HmacSHA256(clientId, clientSecret).toString(Base64)
    console.log("Secret Hash:", secretHash);
+   console.log("Secret Key:", clientSecret);
+   console.log("Secret Id:", clientId);
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [err, setErr] = useState<string>("");
    const [showPassword, setShowPassword] = useState<boolean>(false);

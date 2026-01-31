@@ -33,6 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cookie": "^0.6.0",
+    "crypto": "^1.0.1",
     "iron-session": "^8.0.2",
     "langchain": "^0.2.7",
     "lucide-react": "^0.396.0",

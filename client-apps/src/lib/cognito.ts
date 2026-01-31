@@ -8,6 +8,8 @@ import {
    GlobalSignOutCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 
+import * as crypto from 'crypto';
+
 const cognitoClient = new CognitoIdentityProviderClient({
    region: process.env.AWS_REGION || "us-east-1",
 });
@@ -64,7 +66,11 @@ export const refreshAccessToken = async (
       console.error("COGNITO_CLIENT_ID is not set in environment variables");
       throw new Error("COGNITO_CLIENT_ID is not set in environment variables");
    }
-
+   
+   var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
+   var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
+   const secretHash = crypto.createHmac('SHA256', clientSecret).update(clientId).digest('base64');
+   
    try {
       const command = new InitiateAuthCommand({
          AuthFlow: "REFRESH_TOKEN_AUTH",
@@ -115,13 +121,16 @@ export const forgotPassword = async (username: string): Promise<any> => {
 
 export const signIn = async (email: string, password: string): Promise<any> => {
    try {
+      var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
+      var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
+      const secretHash = crypto.createHmac('SHA256', clientSecret).update(email + clientId).digest('base64');
       const command = new InitiateAuthCommand({
          AuthFlow: "USER_PASSWORD_AUTH",
          ClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
          AuthParameters: {
             USERNAME: email,
             PASSWORD: password,
-            SECRET_HASH: process.env.NEXT_SECRET_COGNITO_ID || "",
+            SECRET_HASH: secretHash,
          },
       });
 

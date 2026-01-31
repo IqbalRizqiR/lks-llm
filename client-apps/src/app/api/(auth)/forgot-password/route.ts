@@ -9,9 +9,7 @@ export async function POST(request: NextRequest) {
    const { username } = await request.json();
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
       var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-      const secretHash = Base64.stringify(
-               HmacSHA256(username + clientId, clientSecret)
-            )
+      const secretHash = HmacSHA256(username + clientId, clientSecret).toString(Base64)
 
    const command = new ForgotPasswordCommand({
       ClientId: process.env.COGNITO_CLIENT_ID,

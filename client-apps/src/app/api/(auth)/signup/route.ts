@@ -3,9 +3,8 @@ import { SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 import cognitoClient from "@/lib/cognito";
 import { z } from "zod";
 import { ResponseBody } from "@/lib/response";
-import * as crypto from 'crypto';
 import Base64 from "crypto-js/enc-base64";
-import { HmacSHA256 } from "crypto-js";
+import HmacSHA256 from "crypto-js/hmac-sha256";
 const signUpSchema = z.object({
    fullName: z.string().min(1, { message: "Full name is required" }),
    email: z
@@ -32,9 +31,7 @@ export async function POST(request: NextRequest) {
 
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
       var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-      const secretHash = Base64.stringify(
-               HmacSHA256(email + clientId, clientSecret)
-            )
+      const secretHash = HmacSHA256(email + clientId, clientSecret).toString(Base64)
 
       const command = new SignUpCommand({
          ClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,

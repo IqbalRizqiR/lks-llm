@@ -28,6 +28,8 @@ export async function POST(request: NextRequest) {
       const validatedData = signUpSchema.parse(body);
       const { fullName, email, password } = validatedData;
 
+      console.log("SECRET_HASH", process.env.NEXT_SECRET_COGNITO_ID)
+
       const command = new SignUpCommand({
          ClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
          SecretHash: process.env.NEXT_SECRET_COGNITO_ID,

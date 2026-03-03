@@ -58,6 +58,7 @@ const Signup = () => {
       useState<boolean>(false);
 
    const router = useRouter();
+   console.log(process.env)
 
    const {
       register,

@@ -45,8 +45,8 @@ type SignUpFormInputs = z.infer<typeof signUpSchema>;
 
 const Signup = () => {
    var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
-   var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-   var clientSecrets = process.env.NEXT_SECRET_COGNITO_ID
+   var clientSecret = process.env.NEXT_KEY_SECRET_COGNITO_ID || ""
+   var clientSecrets = process.env.NEXT_KEY_SECRET_COGNITO_ID
    const secretHash = HmacSHA256(clientId, clientSecret).toString(Base64)
    console.log("Secret Hash:", secretHash);
    console.log("Secret Key:", clientSecrets);

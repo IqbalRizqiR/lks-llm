@@ -9,6 +9,7 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 import Base64 from "crypto-js/enc-base64";
 import { HmacSHA256 } from "crypto-js";
+import CryptoJS from "crypto-js";
 
 const cognitoClient = new CognitoIdentityProviderClient({
    region: process.env.AWS_REGION || "us-east-1",

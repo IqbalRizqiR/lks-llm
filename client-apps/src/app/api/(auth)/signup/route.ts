@@ -5,6 +5,7 @@ import { z } from "zod";
 import { ResponseBody } from "@/lib/response";
 import Base64 from "crypto-js/enc-base64";
 import HmacSHA256 from "crypto-js/hmac-sha256";
+import CryptoJS from "crypto-js"
 const signUpSchema = z.object({
    fullName: z.string().min(1, { message: "Full name is required" }),
    email: z

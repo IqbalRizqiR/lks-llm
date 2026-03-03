@@ -1,4 +1,4 @@
-const { Pool } = require("/opt/node_modules/pg");
+const { Pool } = require("pg");
 
 let pool;
 

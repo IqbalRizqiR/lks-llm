@@ -7,7 +7,8 @@ import {
    ForgotPasswordCommand,
    GlobalSignOutCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
-import CryptoJS from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
+import { HmacSHA256 } from "crypto-js";
 
 const cognitoClient = new CognitoIdentityProviderClient({
    region: process.env.AWS_REGION || "us-east-1",
@@ -68,7 +69,7 @@ export const refreshAccessToken = async (
    
    var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
    var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-   const secretHash = CryptoJS.HmacSHA256(clientId, clientSecret).toString(CryptoJS.enc.Base64);
+   const secretHash = HmacSHA256(refreshToken + clientId, clientSecret).toString(Base64)
    
    try {
       const command = new InitiateAuthCommand({
@@ -77,7 +78,7 @@ export const refreshAccessToken = async (
          AuthParameters: {
             REFRESH_TOKEN: refreshToken,
             CLIENT_ID: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
-            SECRET_HASH: process.env.NEXT_SECRET_COGNITO_ID || "",
+            SECRET_HASH: secretHash,
          },
       });
 
@@ -122,7 +123,7 @@ export const signIn = async (email: string, password: string): Promise<any> => {
    try {
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
       var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
-      const secretHash = CryptoJS.HmacSHA256(email + clientId, clientSecret).toString(CryptoJS.enc.Base64);
+      const secretHash = HmacSHA256(email + clientId, clientSecret).toString(Base64)
       console.log(secretHash)
       const command = new InitiateAuthCommand({
          AuthFlow: "USER_PASSWORD_AUTH",

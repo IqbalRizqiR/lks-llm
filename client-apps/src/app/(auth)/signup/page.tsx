@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { HmacSHA256 } from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
 
 const signUpSchema = z
    .object({
@@ -42,6 +44,13 @@ const signUpSchema = z
 type SignUpFormInputs = z.infer<typeof signUpSchema>;
 
 const Signup = () => {
+   var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
+   var clientSecret = process.env.NEXT_SECRET_COGNITO_ID || ""
+   var clientSecrets = process.env.NEXT_SECRET_COGNITO_ID
+   const secretHash = HmacSHA256(clientId, clientSecret).toString(Base64)
+   console.log("Secret Hash:", secretHash);
+   console.log("Secret Key:", clientSecrets);
+   console.log("Secret Id:", clientId);
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [err, setErr] = useState<string>("");
    const [showPassword, setShowPassword] = useState<boolean>(false);

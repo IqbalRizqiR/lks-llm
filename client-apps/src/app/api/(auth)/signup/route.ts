@@ -3,8 +3,8 @@ import { SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 import cognitoClient from "@/lib/cognito";
 import { z } from "zod";
 import { ResponseBody } from "@/lib/response";
-import * as crypto from 'crypto';
-import CryptoJS from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
+import HmacSHA256 from "crypto-js/hmac-sha256";
 const signUpSchema = z.object({
    fullName: z.string().min(1, { message: "Full name is required" }),
    email: z

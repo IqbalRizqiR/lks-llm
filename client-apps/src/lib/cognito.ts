@@ -123,7 +123,7 @@ export const signIn = async (email: string, password: string): Promise<any> => {
    try {
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
       var clientSecret = process.env.NEXT_PUBLIC_KEY_COGNITO_ID || ""
-      const secretHash = HmacSHA256(email + clientId, clientSecret).toString(Base64)
+      const secretHash = CryptoJS.HmacSHA256(email + clientId, clientSecret).toString(CryptoJS.enc.Base64);
       console.log(secretHash)
       const command = new InitiateAuthCommand({
          AuthFlow: "USER_PASSWORD_AUTH",

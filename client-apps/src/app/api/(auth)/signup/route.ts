@@ -30,14 +30,14 @@ export async function POST(request: NextRequest) {
       const { fullName, email, password } = validatedData;
 
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
-      var clientSecret = process.env.NEXT_KEY_SECRET_COGNITO_ID || ""
+      var clientSecret = process.env.NEXT_KEY_COGNITO_ID || ""
 
-      if (!process.env.NEXT_KEY_SECRET_COGNITO_ID) {
+      if (!process.env.NEXT_KEY_COGNITO_ID) {
          console.error("secret is not set in environment variables");
          throw new Error("secret is not set in environment variables");
       }
 
-      console.log("SECRET_HASH", process.env.NEXT_KEY_SECRET_COGNITO_ID)
+      console.log("SECRET_HASH", process.env.NEXT_KEY_COGNITO_ID)
       const secretHash = CryptoJS.HmacSHA256(email + clientId, clientSecret).toString(CryptoJS.enc.Base64);
 
       const command = new SignUpCommand({

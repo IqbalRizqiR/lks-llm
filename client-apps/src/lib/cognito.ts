@@ -68,7 +68,7 @@ export const refreshAccessToken = async (
    }
    
    var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
-   var clientSecret = process.env.NEXT_KEY_SECRET_COGNITO_ID || ""
+   var clientSecret = process.env.NEXT_KEY_COGNITO_ID || ""
    const secretHash = HmacSHA256(refreshToken + clientId, clientSecret).toString(Base64)
    
    try {
@@ -122,7 +122,7 @@ export const forgotPassword = async (username: string): Promise<any> => {
 export const signIn = async (email: string, password: string): Promise<any> => {
    try {
       var clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || ""
-      var clientSecret = process.env.NEXT_KEY_SECRET_COGNITO_ID || ""
+      var clientSecret = process.env.NEXT_KEY_COGNITO_ID || ""
       const secretHash = HmacSHA256(email + clientId, clientSecret).toString(Base64)
       console.log(secretHash)
       const command = new InitiateAuthCommand({

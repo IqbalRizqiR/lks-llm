@@ -14,7 +14,7 @@ console.log("AUTH_SECRET:", process.env.AUTH_SECRET)
 console.log("AUTH_URL:", process.env.AUTH_URL)
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-   secret: process.env.AUTH_SECRET,
+   secret: "yayayayaya",
    providers: [
       Credentials({
          name: "cognito",

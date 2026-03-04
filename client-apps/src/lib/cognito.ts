@@ -139,8 +139,8 @@ export const signIn = async (email: string, password: string): Promise<any> => {
       const response = await cognitoClient.send(command);
       return response.AuthenticationResult;
    } catch (error) {
-      console.log("Sign in error:", error);
-      // throw error;
+      console.error("Sign in error:", error);
+      throw error;
    }
 };
 

@@ -9,6 +9,10 @@ class InvalidLoginError extends CredentialsSignin {
 const ID_TOKEN_EXPIRATION_MINUTES = parseInt(process.env.NEXT_PUBLIC_COGNITO_ID_TOKEN_EXPIRED || '60', 10);
 const ID_TOKEN_EXPIRATION_SECONDS = ID_TOKEN_EXPIRATION_MINUTES * 60;
 
+console.log("=== RUNTIME CHECK ===")
+console.log("AUTH_SECRET:", process.env.AUTH_SECRET)
+console.log("AUTH_URL:", process.env.AUTH_URL)
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
    providers: [
       Credentials({
